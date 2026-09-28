@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@keyframes sakuraFall {
+  0% {
+    top: -40px;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+@keyframes sakuraSway {
+  0% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateX(45px) rotate(180deg);
+  }
+  100% {
+    transform: translateX(-35px) rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   OFFICIAL PDF REPORT & PRINT STYLES
+   Hides all application UI elements (header, navigation, banners, buttons, FAB)
+   and renders a clean, crisp, official formal document.
+   ========================================================================== */
+@media print {
+  @page {
+    margin: 10mm 12mm 12mm 12mm;
+    size: A4 portrait;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.35 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Force hide all app chrome, floating buttons, nav bars, headers */
+  header,
+  nav,
+  footer,
+  aside,
+  #offline-banner,
+  .print\:hidden,
+  [role="navigation"],
+  button:not(.allow-print) {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Table styling for clean paper print */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+
+  thead {
+    display: table-header-group !important;
+  }
+
+  tfoot {
+    display: table-footer-group !important;
+  }
+
+  .avoid-page-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Remove all shadows, rounded borders, background blur when printing */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

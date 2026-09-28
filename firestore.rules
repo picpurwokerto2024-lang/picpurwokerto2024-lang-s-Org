@@ -1,0 +1,45 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function for valid document IDs
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Helper to validate class data structure
+    function isValidClassData(data) {
+      return data.classConfig is map &&
+             data.students is list && data.students.size() <= 200 &&
+             data.jimpitanRecords is list && data.jimpitanRecords.size() <= 5000 &&
+             data.transactions is list && data.transactions.size() <= 1000;
+    }
+
+    // Helper to validate presence data
+    function isValidPresenceData(data) {
+      return data.visitorId is string && data.visitorId.size() <= 128 &&
+             data.role is string &&
+             data.lastSeen is string;
+    }
+
+    match /classes/{classId} {
+      allow read: if isValidId(classId);
+      allow write: if isValidId(classId) && isValidClassData(request.resource.data);
+
+      match /presence/{visitorId} {
+        allow read: if isValidId(classId) && isValidId(visitorId);
+        allow write: if isValidId(classId) && isValidId(visitorId) && isValidPresenceData(request.resource.data);
+      }
+    }
+
+    // Test connection doc
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Global default-deny fallback
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

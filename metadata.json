@@ -1,0 +1,8 @@
+{
+  "name": "Kas Sekolah",
+  "description": "Aplikasi PWA Pembukuan Kas Sekolah dan Iuran Kas Kelas Mandiri dengan pencatatan iuran harian/mingguan/bulanan, arus kas, rekap tunggakan, target tabungan, dan ekspor laporan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
